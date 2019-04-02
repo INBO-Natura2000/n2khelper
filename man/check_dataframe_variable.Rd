@@ -24,7 +24,7 @@ variable is missing. Otherwise it returns a warning.}
 }
 \value{
 The function returns TRUE when all variables are present. If returns
-   FALSE when a variable is missing and \code{error = FALSE}.
+FALSE when a variable is missing and \code{error = FALSE}.
 }
 \description{
 Check if a data.frame contains variables

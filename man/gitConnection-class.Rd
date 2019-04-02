@@ -33,11 +33,11 @@ Open a git connection
 }
 \section{Slots}{
 
-  \describe{
-   \item{\code{Repository}}{a git repository}
-   \item{\code{Credentials}}{the credentials for the repository}
-   \item{\code{CommitUser}}{the name of the user how will commit}
-   \item{\code{CommitEmail}}{the email of the user how will commit}
-  }
+\describe{
+\item{\code{Repository}}{a git repository}
+\item{\code{Credentials}}{the credentials for the repository}
+\item{\code{CommitUser}}{the name of the user how will commit}
+\item{\code{CommitEmail}}{the email of the user how will commit}
+}
 }
 

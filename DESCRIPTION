@@ -62,4 +62,5 @@ Collate:
     'odbc_insert.R'
     'read_object_environment.R'
 RoxygenNote: 6.1.1
+Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
