@@ -61,6 +61,7 @@ Collate:
     'odbc_get_multi_id.R'
     'odbc_insert.R'
     'read_object_environment.R'
+    'trend_class.R'
 RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
