@@ -4,7 +4,7 @@
 \alias{trend_class}
 \title{Classify trends by comparing the confidence intervals with a reference and thresholds}
 \usage{
-trend_class(lcl, ucl, threshold, reference = 0)
+trend_class(lcl, ucl, threshold, reference = 0, sign = TRUE)
 }
 \arguments{
 \item{lcl}{a vector of lower confidence limits}
@@ -14,6 +14,8 @@ trend_class(lcl, ucl, threshold, reference = 0)
 \item{threshold}{a vector of either 1 or 2 thresholds. A single threshold will be transformed into \code{c(-abs(threshold), abs(threshold))}.}
 
 \item{reference}{the null hypothesis}
+
+\item{sign}{take the direction of the effect into account.}
 }
 \description{
 \itemize{

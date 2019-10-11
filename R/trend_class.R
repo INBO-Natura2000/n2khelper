@@ -3,6 +3,7 @@
 #' @param ucl a vector of upper confidence limits
 #' @param threshold a vector of either 1 or 2 thresholds. A single threshold will be transformed into `c(-abs(threshold), abs(threshold))`.
 #' @param reference the null hypothesis
+#' @param sign take the direction of the effect into account.
 #' @description
 #' - `++` **strong positive effect**: max(threshold) < lcl
 #' - `+` **positive effect**: reference < lcl < max(threshold) and max(threshold) < ucl
@@ -15,12 +16,12 @@
 #' - `?-` **potential negative effect**: lcl < min(threshold) and reference < ucl < max(threshold)
 #' - `?` **unknown effect**: lcl < min(threshold) and max(threshold) < ucl
 #' @export
-#' @importFrom assertthat assert_that is.number noNA
+#' @importFrom assertthat assert_that is.number noNA is.flag
 #' @importFrom dplyr %>%
-trend_class <- function(lcl, ucl, threshold, reference = 0) {
+trend_class <- function(lcl, ucl, threshold, reference = 0, sign = TRUE) {
   assert_that(is.numeric(lcl), is.numeric(ucl), length(lcl) == length(ucl),
               is.numeric(threshold), noNA(threshold), is.number(reference),
-              noNA(reference))
+              noNA(reference), is.flag(sign), noNA(sign))
   if (length(threshold) == 1) {
     assert_that(-abs(threshold) < reference, reference < abs(threshold))
     threshold <- c(-1, 1) * abs(threshold)
@@ -29,7 +30,7 @@ trend_class <- function(lcl, ucl, threshold, reference = 0) {
                 reference < max(threshold))
     threshold <- sort(threshold)
   }
-  ifelse(
+  classification <- ifelse(
     ucl < threshold[2],
     ifelse(
       ucl < reference,
@@ -41,6 +42,17 @@ trend_class <- function(lcl, ucl, threshold, reference = 0) {
       ifelse(lcl > threshold[2], "++", "+"),
       ifelse(lcl > threshold[1], "?+", "?")
     )
-  ) %>%
-    factor(levels = c("++", "+", "+~", "~", "-~", "-", "--", "?+", "?-", "?"))
+  )
+  if (isTRUE(sign)) {
+    return(
+      factor(classification,
+             levels = c("++", "+", "+~", "~", "-~", "-", "--", "?+", "?-", "?"))
+    )
+  } else {
+    classification <- gsub("(\\+|-)", "*", classification)
+    return(
+      factor(classification,
+             levels = c("**", "*", "*~", "~", "?*", "?"))
+    )
+  }
 }
